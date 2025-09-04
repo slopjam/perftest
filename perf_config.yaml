@@ -14,6 +14,12 @@ output_dir: ./results
 default_runs: 3
 default_wait_time: 5
 
+# Custom HTTP headers (optional)
+# headers:
+#   User-Agent: "Custom Performance Test Agent"
+#   Authorization: "Bearer your-token-here"
+#   X-Custom-Header: "custom-value"
+
 # Thresholds for performance ratings (milliseconds)
 thresholds:
   fcp:

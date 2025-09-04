@@ -148,6 +148,12 @@ class DetailedExternalPerfTool:
                 context = browser.contexts[0]
                 page = context.pages[0]
                 
+                # Set custom HTTP headers if provided
+                headers = self.config.get('headers', {})
+                if headers:
+                    print(f"   🔧 Setting custom HTTP headers: {list(headers.keys())}")
+                    await page.set_extra_http_headers(headers)
+                
                 # Always navigate to ensure we're on the right page
                 print(f"   📍 Navigating to {url}")
                 try:
@@ -431,12 +437,26 @@ def main():
                        help='Chrome DevTools Protocol URL (default: http://localhost:9222)')
     parser.add_argument('--wait', type=int, default=5,
                        help='Wait time between runs in seconds (default: 5)')
+    parser.add_argument('--headers', type=str, action='append',
+                       help='Add HTTP header (format: "Header: Value"). Can be used multiple times.')
     
     args = parser.parse_args()
     
     config = load_config(args.config)
     if args.cdp_url != 'http://localhost:9222':
         config['cdp_url'] = args.cdp_url
+    
+    # Process headers from CLI
+    if args.headers:
+        headers = {}
+        for header_str in args.headers:
+            if ':' in header_str:
+                key, value = header_str.split(':', 1)
+                headers[key.strip()] = value.strip()
+            else:
+                print(f"⚠️  Invalid header format: {header_str} (expected 'Header: Value')")
+        if headers:
+            config['headers'] = headers
     
     tool = DetailedExternalPerfTool(config)
     

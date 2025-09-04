@@ -42,6 +42,9 @@ python external_perf_tool_detailed.py "https://www.bestbuy.com" --cache warm --r
 
 # Use config file
 python external_perf_tool_detailed.py "https://site.com" --config perf_config.yaml
+
+# Add custom HTTP headers
+python external_perf_tool_detailed.py "https://site.com" --headers "User-Agent: Custom Agent" --headers "Authorization: Bearer token123"
 ```
 
 ## Example Output
@@ -116,6 +119,7 @@ advanced:
 usage: external_perf_tool_detailed.py [-h] [--cache {warm,cold}] [--runs RUNS]
                                       [--config CONFIG] [--output OUTPUT]
                                       [--cdp-url CDP_URL] [--wait WAIT]
+                                      [--headers HEADERS]
                                       url
 
 positional arguments:
@@ -128,6 +132,7 @@ options:
   --output OUTPUT      Output file path (auto-generated if not specified)
   --cdp-url CDP_URL    Chrome DevTools Protocol URL (default: http://localhost:9222)
   --wait WAIT          Wait time between runs in seconds (default: 5)
+  --headers HEADERS    Add HTTP header (format: "Header: Value"). Can be used multiple times.
 ```
 
 ## How It Works

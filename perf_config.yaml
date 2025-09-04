@@ -1,0 +1,60 @@
+# External Chrome Performance Testing Configuration
+
+# Chrome DevTools Protocol URL
+cdp_url: http://localhost:9222
+
+# Time to wait for page stabilization after load (seconds)
+stabilization_time: 3
+
+# Output settings
+output_format: json
+output_dir: ./results
+
+# Test settings
+default_runs: 3
+default_wait_time: 5
+
+# Thresholds for performance ratings (milliseconds)
+thresholds:
+  fcp:
+    excellent: 1800  # < 1.8s
+    good: 3000      # < 3s
+  lcp:
+    excellent: 2500  # < 2.5s  
+    good: 4000      # < 4s
+  ttfb:
+    excellent: 200   # < 200ms
+    good: 500       # < 500ms
+
+# Advanced settings
+advanced:
+  # Time to wait for LCP measurement (seconds)
+  lcp_wait_time: 3
+  
+  # Maximum resources to report in slowest list
+  max_slow_resources: 5
+  
+  # Enable detailed resource timing
+  detailed_resources: true
+  
+  # Custom Chrome flags (if launching Chrome programmatically)
+  chrome_flags:
+    - --no-sandbox
+    - --disable-web-security
+
+# Site-specific configurations
+sites:
+  costco:
+    stabilization_time: 5
+    lcp_wait_time: 5
+    expected_resources_min: 90
+    
+  bestbuy:
+    stabilization_time: 3
+    lcp_wait_time: 4
+    expected_resources_min: 70
+    
+  amazon:
+    stabilization_time: 2
+    lcp_wait_time: 3
+    expected_resources_min: 50
